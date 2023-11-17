@@ -18,7 +18,8 @@ class DatabaseSeeder extends Seeder
             ->create();
 
         $this->call([
-            AchievementSeeder::class
+            AchievementSeeder::class,
+            BadgeSeeder::class,
         ]);
     }
 }

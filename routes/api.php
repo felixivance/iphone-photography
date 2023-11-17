@@ -13,4 +13,5 @@ Route::group(['prefix'=> 'v1'], static function (){
 Route::group(['prefix'=> 'v1','middleware' => ['auth:sanctum']], static function (){
     Route::post('add-comment', [App\Http\Controllers\CommentController::class,'addComment']);
     Route::post('add-watched-lesson', [App\Http\Controllers\LessonController::class,'addWatchedLesson']);
+    Route::get('index-test/{id}', [App\Http\Controllers\AchievementsController::class,'index2']);
 });

@@ -69,7 +69,7 @@ class CommentWrittenListener
             ]);
         }
 
-        if($userAchievement){
+        if(isset($userAchievement) && isset($achievement)){
             //broadcast new user achievement
             $user = User::query()->where('id',Auth::id())->first();
             event( new AchievementUnlocked($achievement->name,$user));
