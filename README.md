@@ -85,6 +85,9 @@ Run the tests by running the following command:
 
 `php artisan test`
 
+You can also test via the postman collection in the directory, :
+
+`/public/postman/iphone-photography.postman_collection.json`
 
 ## Step 6: Have questions?
 
