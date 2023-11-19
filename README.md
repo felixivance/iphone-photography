@@ -90,6 +90,6 @@ Run the tests by running the following command:
 
 ---
 
-Feel free to reach out and ask me if you're stuck anywhere. I'd be happy to help.
+Feel free to reach out. I'd be happy to help.
 
 `felixrunye@gmail.com`
