@@ -11,12 +11,14 @@ use Illuminate\Http\Request;
 
 class AchievementsController extends Controller
 {
-    public function index(User $user)
+    public function index(Int $id)
     {
+
+        $user = User::query()->where('id',$id)->first();
 
         $achievements = UserAchievement::query()
                     ->join('achievements','achievements.id','=','user_achievements.achievement_id')
-                    ->where('user_id',$user->id)
+                    ->where('user_id',$id)
                     ->select('achievements.name', 'achievements.id')
                     ->get();
 
@@ -31,25 +33,26 @@ class AchievementsController extends Controller
 
         $currentBadge = UserBadge::query()
             ->join('badges','badges.id','=','user_badges.badge_id')
-            ->where('user_id',$user->id)
+            ->where('user_id',$id)
             ->select('badges.name as badge_name','badges.id','user_id')
             ->first();
 
-        $nextBadge = Badge::query()
+        $remaining_achievements = 0;
+        if($currentBadge){
+            $nextBadge = Badge::query()
             ->where('id','>', $currentBadge->id)
             ->orderBy('badges.id','asc')
             ->select('name','achievements')
             ->first();
 
+            $remaining_achievements = $nextBadge->achievements - $unlockedAchievements->count();
 
-        $remaining_achievements = $nextBadge->achievements - $unlockedAchievements->count();
-
-
+        }
         return response()->json([
             'unlocked_achievements' => $unlockedAchievements,
             'next_available_achievements' => $nextAchievements,
-            'current_badge' => $currentBadge->badge_name,
-            'next_badge' => $nextBadge->name,
+            'current_badge' => $currentBadge ? $currentBadge->badge_name : '',
+            'next_badge' => $nextBadge->name ?? '',
             'remaining_to_unlock_next_badge' => $remaining_achievements
         ]);
     }

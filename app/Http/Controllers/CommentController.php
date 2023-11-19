@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\Validator;
 class CommentController extends Controller
 {
     public function addComment(Request $request){
-        try{
+        // try{
+
             $validator= Validator::make($request->all(),[
                 'body' => 'required',
             ]);
@@ -26,15 +27,15 @@ class CommentController extends Controller
 
             $comment = Comment::query()->create([
                 'body' => $request->body,
-                'user_id' => Auth::id(),
+                'user_id' => Auth::user()->id,
             ]);
 
             event( new CommentWritten($comment));
 
             return response()->json($comment, Response::HTTP_OK);
 
-        }catch (\Exception $exception){
-            return response()->json($exception->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
+        // }catch (\Exception $exception){
+        //     return response()->json($exception->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+        // }
     }
 }
